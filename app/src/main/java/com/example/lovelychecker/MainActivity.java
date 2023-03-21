@@ -1,24 +1,52 @@
 package com.example.lovelychecker;
 
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+
+import java.io.UnsupportedEncodingException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 
 public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawerLayout;
 
+
+    private Button login_btn;
+    private EditText emailTxt;
+    private EditText passTxt;
+    private String email, password;
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -38,7 +66,85 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
             navigationView.setCheckedItem(R.id.for_home);
         }
+
+
+        View login_button_header;
+        View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header);
+        login_button_header = headerLayout.findViewById(R.id.login_button_header);
+
+        login_button_header.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment fragment = new LoginFragment();
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace((R.id.fragment_container), fragment).commit();
+
+            }
+        });
+
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        LoginFragment loginFragment = new LoginFragment();
+//        fragmentTransaction.replace(R.id.fragment_container, loginFragment);
+//        fragmentTransaction.commit();
+
+//        login_btn = loginFragment.getView().findViewById(R.id.login_button);
+//        emailTxt = loginFragment.getView().findViewById(R.id.login_email);
+//        passTxt = loginFragment.getView().findViewById(R.id.login_password);
+
+
+
+//        login_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                email = emailTxt.getText().toString();
+//                password = passTxt.getText().toString();
+//
+//                String authToken = createAuthToken(email, password);
+//                checkLoginDetails(authToken);
+//            }
+//        });
+
     }
+//    private void checkLoginDetails(String authToken) {
+//        Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
+//        final interfaceAPI api = retrofit.create(interfaceAPI.class);
+//
+//        Call<String> call = api.checkLogin(authToken);
+//
+//        call.enqueue(new Callback<String>() {
+//            @Override
+//            public void onResponse(Call<String> call, Response<String> response) {
+//                if(response.isSuccessful()) {
+//                    if(response.body().matches("success")) {
+//                        Toast.makeText(getApplicationContext(), "Successfuly logged in!", Toast.LENGTH_LONG).show();
+//                    }
+//                    else {
+//                        Toast.makeText(getApplicationContext(), "Invalid credentials.", Toast.LENGTH_LONG).show();
+//                    }
+//                }
+//                else {
+//                    // handle error
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<String> call, Throwable t) {
+//                Log.e("TAG", t.toString());
+//                t.printStackTrace();
+//            }
+//        });
+//    }
+
+//    private String createAuthToken(String email, String password) {
+//        byte [] data = new byte[0];
+//        try {
+//            data = (email + ": " + password).getBytes("UTF-8");
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
+//        return "Basic " + Base64.encodeToString(data, Base64.NO_WRAP);
+//    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -55,6 +161,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         return true;
     }
 
+
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -63,5 +170,4 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             super.onBackPressed();
         }
     }
-
 }

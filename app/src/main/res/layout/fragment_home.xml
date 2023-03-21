@@ -9,16 +9,22 @@
 
     <EditText
         android:id="@+id/editTextTextPersonName2"
-        android:layout_width="265dp"
-        android:layout_height="48dp"
+        android:layout_width="290dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="34dp"
-        android:layout_marginEnd="71dp"
+        android:layout_marginTop="38dp"
+        android:layout_marginEnd="60dp"
+        android:drawableLeft="@drawable/magnifying_glass_solid"
+        android:drawablePadding="8dp"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="Введите название товара или бренда"
+        android:inputType="textPersonName"
+        android:textColorHint="@color/lavender"
+        android:textCursorDrawable="@color/lavender"
+        android:background="@drawable/custom_input"
         android:textSize="14sp"
-        android:drawableStart="@drawable/magnifying_glass_solid"
+
+
         />
 </RelativeLayout>
