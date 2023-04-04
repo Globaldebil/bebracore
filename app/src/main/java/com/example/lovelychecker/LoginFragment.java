@@ -32,6 +32,9 @@ public class LoginFragment extends Fragment {
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
+    public class Result {
+        String accessToken;
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -74,16 +77,18 @@ public class LoginFragment extends Fragment {
 
         interfaceAPI apiService = RetrofitClientInstance.getInstance();
         LoginRequest loginRequest = new LoginRequest(email, password);
-        Call<Post> call = apiService.loginUser(loginRequest);
+        Call<Result> call = apiService.loginUser(loginRequest);
 
-        call.enqueue(new Callback<Post>() {
+        call.enqueue(new Callback<Result>() {
             @Override
-            public void onResponse(Call<Post> call, Response<Post> response) {
+            public void onResponse(Call<Result> call, Response<Result> response) {
 
                 if (response.isSuccessful()) {
                     Toast.makeText(getActivity(), "On response: Success " + response.code(), Toast.LENGTH_LONG).show();
+                    String body = response.body().toString();
                     loginEmail.setText("");
                     loginPassword.setText("");
+
                 } else {
                     // Обработка ошибки сервера
                     try {
@@ -109,7 +114,7 @@ public class LoginFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<Post> call, Throwable t) {
+            public void onFailure(Call<Result> call, Throwable t) {
                 // Обработка ошибки сети или других ошибок
                 Toast.makeText(getActivity(), "On Failure: Faiure", Toast.LENGTH_LONG).show();
             }

@@ -13,6 +13,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.w3c.dom.Text;
+
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,6 +32,9 @@ public class SignupFragment extends Fragment {
     private EditText signupEmail;
     private EditText signupPassword;
 
+    private ObjectMapper objectMapper = new ObjectMapper();
+    private TextView usernameTextView;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,7 +46,7 @@ public class SignupFragment extends Fragment {
         signupUsername = view.findViewById(R.id.signup_username);
         signupEmail = view.findViewById(R.id.signup_email);
         signupPassword = view.findViewById(R.id.signup_password);
-
+        usernameTextView = view.findViewById(R.id.usernameTextView);
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,26 +80,47 @@ public class SignupFragment extends Fragment {
         String password = signupPassword.getText().toString();
 
         interfaceAPI apiService = RetrofitClientInstance.getInstance();
-        Call<Post> call = apiService.signUp(username, email, password);
+        SignupRequest signupRequest = new SignupRequest(username, email, password);
+        Call<Post> call = apiService.signUp(signupRequest);
 
         call.enqueue(new Callback<Post>() {
             @Override
             public void onResponse(Call<Post> call, Response<Post> response) {
-                if(response.isSuccessful()) {
-                    Toast.makeText(getActivity(), "On response: Success" + response.code(), Toast.LENGTH_LONG).show();
-                    signupUsername.setText("");
-                    signupEmail.setText("");
-                    signupPassword.setText("");
+                if (response.isSuccessful()) {
+                    Toast.makeText(getActivity(), "On response: Success " + response.code(), Toast.LENGTH_LONG).show();
+
+                } else {
+                    // Обработка ошибки сервера
+                    try {
+
+                        String body = response.errorBody().string();
+                        System.out.println(body);
+                        JsonNode node = objectMapper.readValue(body, JsonNode.class);
+                        String usernameError = node.get("body").get("fieldErrors").path("username").asText(null);
+                        String emailError = node.get("body").get("fieldErrors").path("email").asText(null);
+                        String passwordError = node.get("body").get("fieldErrors").path("password").asText(null);
+
+                        if(usernameError != null) {
+                            usernameTextView.setText(usernameError);
+                        }
+                        if(emailError != null)  {
+                            Toast.makeText(getActivity(), emailError, Toast.LENGTH_LONG).show();
+                        }
+                        else if (passwordError != null) {
+                            Toast.makeText(getActivity(), passwordError, Toast.LENGTH_LONG).show();
+                        }
+
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    //Toast.makeText(getActivity(), "On response: Failure " + response.code(), Toast.LENGTH_LONG).show();
                 }
-                Toast.makeText(getActivity(), "On response: Failure" + response.code(), Toast.LENGTH_LONG).show();
 
             }
             @Override
             public void onFailure(Call<Post> call, Throwable t) {
                 Toast.makeText(getActivity(), "On Failure: Failure", Toast.LENGTH_LONG).show();
-                signupUsername.setText("");
-                signupEmail.setText("");
-                signupPassword.setText("");
+
             }
         });
     }
