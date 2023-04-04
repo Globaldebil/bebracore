@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClientInstance {
 
 private static Retrofit retrofit = null;
-    private static final String BASE_URL = "https://yourserver.com/"; // ЗАМЕНИТЬ НА URL СЕРВЕРА
+    private static final String BASE_URL = "http://172.20.10.7:8080";
 
     public static interfaceAPI getInstance() {
         if (retrofit == null) {

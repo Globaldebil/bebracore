@@ -11,9 +11,17 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class LoginFragment extends Fragment {
@@ -21,6 +29,8 @@ public class LoginFragment extends Fragment {
     private EditText loginEmail;
     private EditText loginPassword;
     private Button loginButton;
+
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     @Nullable
     @Override
@@ -31,6 +41,8 @@ public class LoginFragment extends Fragment {
         loginPassword = view.findViewById(R.id.login_password);
         loginButton = view.findViewById(R.id.login_button);
 
+
+        //КНОПКА LOGIN
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,6 +50,8 @@ public class LoginFragment extends Fragment {
             }
         });
 
+
+        //ПЕРЕХОД НА SIGNUP
         TextView signUpTextView = view.findViewById(R.id.signupTextView);
         signUpTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,27 +73,46 @@ public class LoginFragment extends Fragment {
         String password = loginPassword.getText().toString();
 
         interfaceAPI apiService = RetrofitClientInstance.getInstance();
-        Call<Void> call = apiService.loginUser(email, password);
+        LoginRequest loginRequest = new LoginRequest(email, password);
+        Call<Post> call = apiService.loginUser(loginRequest);
 
-        call.enqueue(new Callback<Void>() {
+        call.enqueue(new Callback<Post>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(Call<Post> call, Response<Post> response) {
 
                 if (response.isSuccessful()) {
-                    Toast.makeText(getActivity(), "On response: Success", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "On response: Success " + response.code(), Toast.LENGTH_LONG).show();
+                    loginEmail.setText("");
+                    loginPassword.setText("");
                 } else {
                     // Обработка ошибки сервера
-                    Toast.makeText(getActivity(), "On response: Failure", Toast.LENGTH_LONG).show();
+                    try {
+
+                        String body = response.errorBody().string();
+                        System.out.println(body);
+                        JsonNode node = objectMapper.readValue(body, JsonNode.class);
+                        String emailError = node.get("body").get("fieldErrors").path("email").asText(null);
+                        String passwordError = node.get("body").get("fieldErrors").path("password").asText(null);
+
+                        if(emailError != null)  {
+                            Toast.makeText(getActivity(), emailError, Toast.LENGTH_LONG).show();
+                        }
+                        else if (passwordError != null) {
+                            Toast.makeText(getActivity(), passwordError, Toast.LENGTH_LONG).show();
+                        }
+
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    //Toast.makeText(getActivity(), "On response: Failure " + response.code(), Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(Call<Post> call, Throwable t) {
                 // Обработка ошибки сети или других ошибок
                 Toast.makeText(getActivity(), "On Failure: Faiure", Toast.LENGTH_LONG).show();
             }
         });
     }
-
-
 }
