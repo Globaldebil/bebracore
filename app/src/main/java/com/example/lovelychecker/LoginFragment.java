@@ -89,6 +89,13 @@ public class LoginFragment extends Fragment {
                     loginEmail.setText("");
                     loginPassword.setText("");
 
+                    Fragment confirmFragment = new ConfirmFragment();
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_container, confirmFragment)
+                            .addToBackStack(null)
+                            .commit();
+
                 } else {
                     // Обработка ошибки сервера
                     try {

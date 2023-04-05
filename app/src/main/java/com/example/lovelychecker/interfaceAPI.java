@@ -18,6 +18,9 @@ public interface interfaceAPI {
     @POST("/signupf")
     Call<Post> signUp(@Body SignupRequest signupRequest);
 
-    @GET("/somewhere")
-    Call<Post> something(String something);
+    @POST("/confirm") // потом поменять
+    Call<Post> confirm(@Body String confirmToken);
+
+//    @GET("/somewhere")
+//    Call<Post> something(String something);
 }

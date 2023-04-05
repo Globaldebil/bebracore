@@ -34,6 +34,8 @@ public class SignupFragment extends Fragment {
 
     private ObjectMapper objectMapper = new ObjectMapper();
     private TextView usernameTextView;
+    private TextView emailTextView;
+    private TextView passwordTextView;
 
 
     @Override
@@ -47,6 +49,8 @@ public class SignupFragment extends Fragment {
         signupEmail = view.findViewById(R.id.signup_email);
         signupPassword = view.findViewById(R.id.signup_password);
         usernameTextView = view.findViewById(R.id.usernameTextView);
+        emailTextView = view.findViewById(R.id.emailTextView);
+        passwordTextView = view.findViewById(R.id.passwordTextView);
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,10 +108,10 @@ public class SignupFragment extends Fragment {
                             usernameTextView.setText(usernameError);
                         }
                         if(emailError != null)  {
-                            Toast.makeText(getActivity(), emailError, Toast.LENGTH_LONG).show();
+                            emailTextView.setText(emailError);
                         }
                         else if (passwordError != null) {
-                            Toast.makeText(getActivity(), passwordError, Toast.LENGTH_LONG).show();
+                            passwordTextView.setText(passwordError);
                         }
 
                     } catch (IOException e) {
