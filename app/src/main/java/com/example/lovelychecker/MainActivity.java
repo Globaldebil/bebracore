@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         Object o = getIntent();
         Uri uri = getIntent().getData();
 
-        if(uri != null) {
+        if(uri != null && uri.getQueryParameter("code") != null) {
             String path = uri.getEncodedPath();
             String fragment = uri.getFragment();
             String query = uri.getEncodedQuery();
