@@ -1,11 +1,15 @@
 package com.example.lovelychecker;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Browser;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -16,7 +20,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.util.List;
 
+import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,12 +37,11 @@ public class LoginFragment extends Fragment {
     private EditText loginEmail;
     private EditText loginPassword;
     private Button loginButton;
+    private LinearLayout googleButton;
+    private LinearLayout vkButton;
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    public class Result {
-        String accessToken;
-    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -43,7 +50,21 @@ public class LoginFragment extends Fragment {
         loginEmail = view.findViewById(R.id.login_email);
         loginPassword = view.findViewById(R.id.login_password);
         loginButton = view.findViewById(R.id.login_button);
+        googleButton = view.findViewById(R.id.google);
+        vkButton = view.findViewById(R.id.vk);
 
+        googleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                serviceRedirect("google");
+            }
+        });
+        vkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                serviceRedirect("vk");
+            }
+        });
 
         //КНОПКА LOGIN
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -77,11 +98,11 @@ public class LoginFragment extends Fragment {
 
         interfaceAPI apiService = RetrofitClientInstance.getInstance();
         LoginRequest loginRequest = new LoginRequest(email, password);
-        Call<Result> call = apiService.loginUser(loginRequest);
+        Call<LoginResponse> call = apiService.loginUser(loginRequest);
 
-        call.enqueue(new Callback<Result>() {
+        call.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<Result> call, Response<Result> response) {
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
 
                 if (response.isSuccessful()) {
                     Toast.makeText(getActivity(), "On response: Success " + response.code(), Toast.LENGTH_LONG).show();
@@ -121,9 +142,33 @@ public class LoginFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<Result> call, Throwable t) {
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
                 // Обработка ошибки сети или других ошибок
                 Toast.makeText(getActivity(), "On Failure: Faiure", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+    public void serviceRedirect(String service) {
+        interfaceAPI apiService = RetrofitClientInstance.getInstance();
+
+        Request request = new Request.Builder().url(RetrofitClientInstance.BASE_URL + "/login/oauth2/" + service).build();
+        OkHttpClient client = new OkHttpClient.Builder().followRedirects(false).build();
+        okhttp3.Call call = client.newCall(request);
+
+        call.enqueue(new okhttp3.Callback() {
+            @Override
+            public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
+                List<String> cookies = response.headers().values("Set-Cookie");
+                if(!cookies.isEmpty()) {
+                    RetrofitClientInstance.JSESSION_ID = (cookies.get(0).split(";"))[0];
+                }
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(response.headers().get("Location")));
+                startActivity(browserIntent);
+            }
+
+            @Override
+            public void onFailure(okhttp3.Call call, IOException e) {
+
             }
         });
     }

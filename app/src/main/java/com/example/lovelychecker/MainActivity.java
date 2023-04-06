@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -20,8 +21,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import retrofit2.Call;
@@ -161,6 +164,42 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         return true;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Object o = getIntent();
+        Uri uri = getIntent().getData();
+
+        if(uri != null) {
+            String path = uri.getEncodedPath();
+            String fragment = uri.getFragment();
+            String query = uri.getEncodedQuery();
+            String uri2 = uri.toString();
+
+            String request = path + "?" + query;
+            interfaceAPI apiService = RetrofitClientInstance.getInstance();
+
+            Call<LoginResponse> call = apiService.finishOAuth2(request, RetrofitClientInstance.JSESSION_ID);
+
+            call.enqueue(new Callback<LoginResponse>() {
+                @Override
+                public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+
+                    if (response.isSuccessful()) {
+
+                    } else {
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<LoginResponse> call, Throwable t) {
+                    System.out.println();
+                }
+            });
+            System.out.println();
+        }
+    }
 
     @Override
     public void onBackPressed() {

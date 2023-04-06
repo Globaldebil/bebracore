@@ -28,6 +28,7 @@ public class ConfirmFragment extends Fragment {
 
     private EditText confirm_text;
     private Button confirm_button;
+    private ObjectMapper mapper = new ObjectMapper();
 
 
     @Nullable
@@ -54,13 +55,27 @@ public class ConfirmFragment extends Fragment {
 
         interfaceAPI apiService = RetrofitClientInstance.getInstance();
 
-        Post post = new Post(confirm_code);
-        Call<Post> call = apiService.confirm(String.valueOf(post));
+        Call<Post> call = apiService.confirm(confirm_code);
 
         call.enqueue(new Callback<Post>() {
             @Override
             public void onResponse(Call<Post> call, Response<Post> response) {
+                if (response.isSuccessful()) {
+                    // Переводишь на другую страницу
+                } else {
+                    String body = null;
+                    try {
+                        body = response.errorBody().string();
+                        System.out.println(body);
+                        JsonNode node = mapper.readValue(body, JsonNode.class);
+                        String error = node.get("body").get("fieldErrors").path("token").asText(null);
 
+                        Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+                    }
+                    catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
             }
 
             @Override

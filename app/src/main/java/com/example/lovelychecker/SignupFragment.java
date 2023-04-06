@@ -85,14 +85,18 @@ public class SignupFragment extends Fragment {
 
         interfaceAPI apiService = RetrofitClientInstance.getInstance();
         SignupRequest signupRequest = new SignupRequest(username, email, password);
-        Call<Post> call = apiService.signUp(signupRequest);
+        Call<LoginResponse> call = apiService.signUp(signupRequest);
 
-        call.enqueue(new Callback<Post>() {
+        call.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<Post> call, Response<Post> response) {
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(getActivity(), "On response: Success " + response.code(), Toast.LENGTH_LONG).show();
-
+                    Fragment loginFragment = new ConfirmFragment();
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_container, loginFragment)
+                            .addToBackStack(null)
+                            .commit();
                 } else {
                     // Обработка ошибки сервера
                     try {
@@ -110,7 +114,7 @@ public class SignupFragment extends Fragment {
                         if(emailError != null)  {
                             emailTextView.setText(emailError);
                         }
-                        else if (passwordError != null) {
+                        if (passwordError != null) {
                             passwordTextView.setText(passwordError);
                         }
 
@@ -122,7 +126,7 @@ public class SignupFragment extends Fragment {
 
             }
             @Override
-            public void onFailure(Call<Post> call, Throwable t) {
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
                 Toast.makeText(getActivity(), "On Failure: Failure", Toast.LENGTH_LONG).show();
 
             }

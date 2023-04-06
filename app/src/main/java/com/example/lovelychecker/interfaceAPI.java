@@ -8,19 +8,26 @@ import retrofit2.http.Header;
 import retrofit2.Call;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 public interface interfaceAPI {
 
     @POST("/login")
-    Call<LoginFragment.Result> loginUser(@Body LoginRequest loginRequest);
+    Call<LoginResponse> loginUser(@Body LoginRequest loginRequest);
 
     @POST("/signupf")
-    Call<Post> signUp(@Body SignupRequest signupRequest);
+    Call<LoginResponse> signUp(@Body SignupRequest signupRequest);
 
-    @POST("/confirm") // потом поменять
-    Call<Post> confirm(@Body String confirmToken);
+    @POST("/accountVerification/{confirmToken}")
+    Call<Post> confirm(@Path(value = "confirmToken") String confirmToken);
 
+    @GET
+    Call<LoginResponse> finishOAuth2(@Url String url, @Header("Cookie") String jsessionId);
+
+    @GET("login/oauth2/{service}")
+    Call<Void> oauth2(@Path(value="service") String service);
 //    @GET("/somewhere")
 //    Call<Post> something(String something);
 }
