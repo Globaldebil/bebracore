@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".tovar.Tovar_Activity">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/prodList"
+        android:layout_width="411dp"
+        android:layout_height="568dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="164dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.571"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/finder"
+        android:layout_width="338dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="7dp"
+        android:background="@drawable/ramk"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="   Введите название товара или бренда"
+        android:textColor="#D0DAE0"
+        app:layout_constraintBottom_toTopOf="@+id/prodList"
+        app:layout_constraintEnd_toStartOf="@+id/find"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/filt"
+        android:layout_width="139dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/inset"
+        android:text="Фильтр"
+        android:textSize="12sp"
+        android:textColor="#758EBC"
+        app:layout_constraintBottom_toTopOf="@+id/prodList"
+        app:layout_constraintEnd_toStartOf="@+id/type"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/finder"
+        app:layout_constraintTop_toBottomOf="@+id/finder" />
+
+    <Button
+        android:id="@+id/type"
+        android:layout_width="222dp"
+        android:layout_height="48dp"
+        android:background="@drawable/inset"
+        android:text="По возрастанию цены"
+        android:textColor="#758EBC"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/filt"
+        app:layout_constraintEnd_toEndOf="@+id/find"
+        app:layout_constraintTop_toTopOf="@+id/filt"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageButton
+        android:id="@+id/find"
+        android:layout_width="44dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="7dp"
+        android:backgroundTint="#FFFFFF"
+        android:onClick="find"
+        app:layout_constraintBottom_toBottomOf="@+id/finder"
+        app:layout_constraintStart_toEndOf="@+id/finder"
+        app:layout_constraintTop_toTopOf="@+id/finder"
+        app:srcCompat="@drawable/magnifying_glass_solid" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
