@@ -158,6 +158,8 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             case R.id.nav_settings:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
                 break;
+            case R.id.chats:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ChatsFragment()).commit();
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
