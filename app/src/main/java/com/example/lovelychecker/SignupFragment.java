@@ -34,6 +34,8 @@ public class SignupFragment extends Fragment {
 
     private ObjectMapper objectMapper = new ObjectMapper();
     private TextView usernameTextView;
+    private TextView emailTextView;
+    private TextView passwordTextView;
 
 
     @Override
@@ -47,6 +49,8 @@ public class SignupFragment extends Fragment {
         signupEmail = view.findViewById(R.id.signup_email);
         signupPassword = view.findViewById(R.id.signup_password);
         usernameTextView = view.findViewById(R.id.usernameTextView);
+        emailTextView = view.findViewById(R.id.emailTextView);
+        passwordTextView = view.findViewById(R.id.passwordTextView);
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,14 +85,18 @@ public class SignupFragment extends Fragment {
 
         interfaceAPI apiService = RetrofitClientInstance.getInstance();
         SignupRequest signupRequest = new SignupRequest(username, email, password);
-        Call<Post> call = apiService.signUp(signupRequest);
+        Call<LoginResponse> call = apiService.signUp(signupRequest);
 
-        call.enqueue(new Callback<Post>() {
+        call.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<Post> call, Response<Post> response) {
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(getActivity(), "On response: Success " + response.code(), Toast.LENGTH_LONG).show();
-
+                    Fragment loginFragment = new ConfirmFragment();
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_container, loginFragment)
+                            .addToBackStack(null)
+                            .commit();
                 } else {
                     // Обработка ошибки сервера
                     try {
@@ -104,10 +112,10 @@ public class SignupFragment extends Fragment {
                             usernameTextView.setText(usernameError);
                         }
                         if(emailError != null)  {
-                            Toast.makeText(getActivity(), emailError, Toast.LENGTH_LONG).show();
+                            emailTextView.setText(emailError);
                         }
-                        else if (passwordError != null) {
-                            Toast.makeText(getActivity(), passwordError, Toast.LENGTH_LONG).show();
+                        if (passwordError != null) {
+                            passwordTextView.setText(passwordError);
                         }
 
                     } catch (IOException e) {
@@ -118,7 +126,7 @@ public class SignupFragment extends Fragment {
 
             }
             @Override
-            public void onFailure(Call<Post> call, Throwable t) {
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
                 Toast.makeText(getActivity(), "On Failure: Failure", Toast.LENGTH_LONG).show();
 
             }

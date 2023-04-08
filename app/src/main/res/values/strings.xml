@@ -15,8 +15,8 @@
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_login">LoginActivity</string>
 
-    <string name="sign_up_link"><a href ="@+id/SignupFragment">Dont have an account? Sign up!</a></string>
-    <string name="sign_in_link"><a href ="@+id/LoginFragment">Already have an account? Sign in!</a></string>
+    <string name="sign_up_link"><a href="@+id/SignupFragment">Dont have an account? Sign up!</a></string>
+    <string name="sign_in_link"><a href="@+id/LoginFragment">Already have an account? Sign in!</a></string>
 
 
 </resources>

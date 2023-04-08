@@ -8,6 +8,11 @@
     <group>
 
         <item
+            android:id="@+id/chats"
+            android:icon="@drawable/baseline_chat_bubble_24"
+            android:title="Мои чаты" />
+
+        <item
             android:id="@+id/beauty_and_health"
             android:icon="@drawable/nav_beauty"
             android:title="Красота и здоровье" />

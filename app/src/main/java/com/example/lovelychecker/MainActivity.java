@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -21,7 +20,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.lovelychecker.tovar.Tovar_Activity;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.UnsupportedEncodingException;
@@ -171,10 +169,5 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         } else {
             super.onBackPressed();
         }
-    }
-
-    public void toSmartphones(View view){
-        Intent intent = new Intent(this, Tovar_Activity.class);
-        startActivity(intent);
     }
 }
