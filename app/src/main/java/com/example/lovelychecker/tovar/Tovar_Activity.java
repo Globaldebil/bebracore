@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -45,7 +46,7 @@ public class Tovar_Activity extends AppCompatActivity {
         prodList.setAdapter(productAdapter);
     }
 
-    public void find(){
+    public void find(View view){
         String text = finder.getText().toString();
         //Вставить функцию поиска через сервер
     }
