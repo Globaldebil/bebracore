@@ -30,8 +30,16 @@ public class Tovar_Activity extends AppCompatActivity {
         finder = (EditText) findViewById(R.id.finder);
         find = (ImageButton) findViewById(R.id.find);
         List<Product> item = new ArrayList<>();
-        item.add(new Product(13000, "Xiaomi note 5"));
-        item.add(new Product(60000, "Google Pixel 6 Pro"));
+
+        Product product1 = new Product();
+        product1.setTitle("Xiaomi note 5");
+        product1.setPriceFrom(15000.0);
+        item.add(product1);
+
+        Product product2 = new Product();
+        product2.setTitle("Xiaomi note 5");
+        product2.setPriceFrom(15000.0);
+        item.add(product2);
 
         setProductRecylder(item);
     }

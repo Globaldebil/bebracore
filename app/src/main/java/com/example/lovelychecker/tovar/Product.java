@@ -1,91 +1,59 @@
 package com.example.lovelychecker.tovar;
-class Screen{
-    double diagonal;
-    String resolution,type;
-    short frequency;
-}
 
-class Processor{
-    String value;
-    short cores;
-    Processor(String value, short cores){
-        this.value = value;
-        this.cores = cores;
-    }
-}
-
-class RAM{
-    int value;
-    String measure;
-    RAM(int value, String measure){
-        this.value = value;
-        this.measure = measure;
-    }
-}
-
-class ROM{
-    int value;
-    String measure;
-    ROM(int value, String measure){
-        this.value = value;
-        this.measure = measure;
-    }
-}
-
-class Cam{
-    String mpics,resolution;
-    short count;
-    Cam(String mpics, String resolution, short count){
-        this.mpics = mpics;
-        this.resolution = resolution;
-        this.count = count;
-    }
-}
-
-class Inface{
-    String collection,headphones;
-    Inface(String collection, String headphones){
-        this.collection = collection;
-        this.headphones = headphones;
-    }
-}
-
-class Wireless{
-    String mobile_wireless, wifi;
-    boolean ufc_support, gps_support, glonass_support;
-    float bluetooth;
-    Wireless(boolean ufc_support,boolean gps_support,boolean glonass_support,float bluetooth, String mobile_wireless, String wifi){
-        this.ufc_support = ufc_support;
-        this.gps_support = gps_support;
-        this.glonass_support = glonass_support;
-        this.bluetooth = bluetooth;
-        this.mobile_wireless = mobile_wireless;
-        this.wifi = wifi;
-    }
-}
-
-class Battery{
-    String type, capacity;
-    boolean fast_charge_support;
-    Battery(String type, String capacity, boolean fast_charge_support){
-        this.type = type;
-        this.capacity = capacity;
-        this.fast_charge_support = fast_charge_support;
-    }
-}
+import java.util.Map;
 public class Product {
-    int price;
-    String name;
-    public Product(int price, String name) {
-        this.price = price;
-        this.name = name;
+    private String id;
+    private String title;
+    private byte[] image;
+    private Double priceFrom;
+    private Double priceTo;
+    private Map<String, Object> characteristics;
+
+    public String getId() {
+        return id;
     }
 
-    public int getPrice() {
-        return price;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public Double getPriceFrom() {
+        return priceFrom;
+    }
+
+    public void setPriceFrom(Double priceFrom) {
+        this.priceFrom = priceFrom;
+    }
+
+    public Double getPriceTo() {
+        return priceTo;
+    }
+
+    public void setPriceTo(Double priceTo) {
+        this.priceTo = priceTo;
+    }
+
+    public Map<String, Object> getCharacteristics() {
+        return characteristics;
+    }
+
+    public void setCharacteristics(Map<String, Object> characteristics) {
+        this.characteristics = characteristics;
     }
 }

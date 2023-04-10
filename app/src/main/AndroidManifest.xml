@@ -18,7 +18,7 @@
             android:name=".MessageListActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".tovar.Tovar_Activity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
