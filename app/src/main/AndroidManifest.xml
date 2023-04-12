@@ -15,10 +15,13 @@
         android:theme="@style/Theme.LovelyChecker"
         tools:targetApi="31">
         <activity
+            android:name=".tovar.Fitler"
+            android:exported="false" />
+        <activity
             android:name=".MessageListActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".tovar.Tovar_Activity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
