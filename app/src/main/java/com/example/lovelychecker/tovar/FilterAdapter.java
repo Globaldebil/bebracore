@@ -15,13 +15,13 @@ import com.example.lovelychecker.R;
 
 import java.util.List;
 
-public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class FilterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int TYPE = 1;
     private final Context context;
-    private final List<Product> listRecyclerItem;
+    private final List<String> listRecyclerItem;
 
-    public ProductAdapter(Context context, List<Product> listRecyclerItem) {
+    public FilterAdapter(Context context, List<String> listRecyclerItem) {
         this.context = context;
         this.listRecyclerItem = listRecyclerItem;
     }
@@ -30,15 +30,10 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         private TextView name;
 
-        private TextView price;
-
-        private TextView score;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
-            score = itemView.findViewById(R.id.score);
-            name = itemView.findViewById(R.id.prodName);
-            price = itemView.findViewById(R.id.prodPrice);
+            name = itemView.findViewById(R.id.brand);
         }
     }
 
@@ -50,7 +45,7 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             default:
 
-                View layoutView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item, viewGroup, false);
+                View layoutView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.brand_item, viewGroup, false);
 
                 return new ItemViewHolder((layoutView));
         }
@@ -67,10 +62,7 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             default:
 
                 ItemViewHolder itemViewHolder = (ItemViewHolder) viewHolder;
-                Product product = listRecyclerItem.get(i);
-                itemViewHolder.name.setText(product.getTitle());//Имя сюда
-                itemViewHolder.score.setText(String.valueOf(product.getId()));//Сюда среднюю оценку
-                itemViewHolder.price.setText(String.format(String.valueOf(product.getPriceFrom())+"₽ - "+product.getPriceTo()+"₽"));//Сюда цену
+                itemViewHolder.name.setText(listRecyclerItem.get(i));//Имя сюда
         }
 
     }
