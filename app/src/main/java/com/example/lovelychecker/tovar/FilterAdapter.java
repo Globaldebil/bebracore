@@ -5,6 +5,7 @@ import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lovelychecker.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FilterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -21,19 +23,23 @@ public class FilterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private final Context context;
     private final List<String> listRecyclerItem;
 
-    public FilterAdapter(Context context, List<String> listRecyclerItem) {
+    private String type;
+    private ArrayList<String> filters = new ArrayList<>();
+
+    public FilterAdapter(Context context, List<String> listRecyclerItem, String type) {
         this.context = context;
         this.listRecyclerItem = listRecyclerItem;
+        this.type = type;
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
 
         private TextView name;
-
-
+        private CheckBox box;
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.brand);
+            box  = itemView.findViewById(R.id.checkBox3);
         }
     }
 
@@ -62,7 +68,17 @@ public class FilterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             default:
 
                 ItemViewHolder itemViewHolder = (ItemViewHolder) viewHolder;
+
                 itemViewHolder.name.setText(listRecyclerItem.get(i));//Имя сюда
+
+                if(type.equals("ram")) {
+                    String value = itemViewHolder.name.getText().toString();
+                    itemViewHolder.box.setOnClickListener(v -> addFilter(v, value.split(" ")[0]));
+                }
+                else {
+                    itemViewHolder.box.setOnClickListener(v -> addFilter(v, itemViewHolder.name.getText().toString()));
+
+                }
         }
 
     }
@@ -70,5 +86,19 @@ public class FilterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public int getItemCount() {
         return listRecyclerItem.size();
+    }
+
+    public void addFilter(View view, String value) {
+        CheckBox box = (CheckBox) view;
+        if (box.isChecked()) {
+            filters.add(value);
+        }
+        else {
+            filters.remove(value);
+        }
+    }
+
+    public ArrayList<String> getFilters() {
+        return filters;
     }
 }

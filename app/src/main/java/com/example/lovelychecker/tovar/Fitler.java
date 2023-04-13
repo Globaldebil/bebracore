@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 
 import com.example.lovelychecker.R;
 
@@ -23,7 +24,8 @@ public class Fitler extends AppCompatActivity {
     private final Set<String> brand = new HashSet<>();
 
     private final Set<String> ozy = new HashSet<>();
-    private FilterAdapter filterAdapter;
+    private FilterAdapter brandAdapter;
+    private FilterAdapter ramAdapter;
 
     private RecyclerView brandList;
 
@@ -45,6 +47,8 @@ public class Fitler extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Fitler.this, Tovar_Activity.class);
+                intent.putStringArrayListExtra("brands", brandAdapter.getFilters());
+                intent.putStringArrayListExtra("rams", ramAdapter.getFilters());
                 startActivity(intent);
             }
         });
@@ -57,8 +61,8 @@ public class Fitler extends AppCompatActivity {
         brandList = findViewById(R.id.brandList);
         brandList.setLayoutManager(layoutManager);
 
-        filterAdapter  = new FilterAdapter(this, item);
-        brandList.setAdapter(filterAdapter);
+        brandAdapter  = new FilterAdapter(this, item, "brand");
+        brandList.setAdapter(brandAdapter);
     }
     private void setOzyRecylder(Set<String> set) {
         List<String> item = new ArrayList<String>(set);
@@ -66,7 +70,12 @@ public class Fitler extends AppCompatActivity {
         brandList = findViewById(R.id.ozy);
         brandList.setLayoutManager(layoutManager);
 
-        filterAdapter  = new FilterAdapter(this, item);
-        brandList.setAdapter(filterAdapter);
+        ramAdapter  = new FilterAdapter(this, item, "ram");
+        brandList.setAdapter(ramAdapter);
+    }
+
+    public void accept(View view) {
+        List<String> rams = ramAdapter.getFilters();
+        List<String> brands = brandAdapter.getFilters();
     }
 }

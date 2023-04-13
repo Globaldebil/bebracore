@@ -69,8 +69,8 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 ItemViewHolder itemViewHolder = (ItemViewHolder) viewHolder;
                 Product product = listRecyclerItem.get(i);
                 itemViewHolder.name.setText(product.getTitle());//Имя сюда
-                itemViewHolder.score.setText(String.valueOf(product.getId()));//Сюда среднюю оценку
-                itemViewHolder.price.setText(String.format(String.valueOf(product.getPriceFrom())+"₽ - "+product.getPriceTo()+"₽"));//Сюда цену
+                itemViewHolder.score.setText(String.valueOf(product.getAverageRating()));//Сюда среднюю оценку
+                itemViewHolder.price.setText(String.format(String.valueOf(product.getFromPrice())+"₽ - "+product.getToPrice()+"₽"));//Сюда цену
         }
 
     }

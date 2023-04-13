@@ -1,5 +1,9 @@
 package com.example.lovelychecker;
 
+import com.example.lovelychecker.tovar.Product;
+
+import java.util.List;
+
 import javax.xml.transform.Result;
 
 import retrofit2.http.Body;
@@ -25,6 +29,10 @@ public interface interfaceAPI {
 
     @GET
     Call<LoginResponse> finishOAuth2(@Url String url, @Header("Cookie") String jsessionId);
+
+    @GET("/product/smartphones")
+    Call<List<Product>> getProducts(@Query(value = "text") String text, @Query("brands") List<String> brands,
+                                    @Query("rams") List<String> rams, @Query("sort") String sort);
 
     @GET("login/oauth2/{service}")
     Call<Void> oauth2(@Path(value="service") String service);

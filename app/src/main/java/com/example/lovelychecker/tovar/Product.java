@@ -5,8 +5,10 @@ public class Product {
     private String id;
     private String title;
     private byte[] image;
-    private Double priceFrom;
-    private Double priceTo;
+    private Double fromPrice;
+    private Double toPrice;
+
+    private Double averageRating;
     private Map<String, Object> characteristics;
 
     public String getId() {
@@ -33,20 +35,28 @@ public class Product {
         this.image = image;
     }
 
-    public Double getPriceFrom() {
-        return priceFrom;
+    public Double getFromPrice() {
+        return fromPrice;
     }
 
-    public void setPriceFrom(Double priceFrom) {
-        this.priceFrom = priceFrom;
+    public void setFromPrice(Double fromPrice) {
+        this.fromPrice = fromPrice;
     }
 
-    public Double getPriceTo() {
-        return priceTo;
+    public Double getToPrice() {
+        return toPrice;
     }
 
-    public void setPriceTo(Double priceTo) {
-        this.priceTo = priceTo;
+    public void setToPrice(Double toPrice) {
+        this.toPrice = toPrice;
+    }
+
+    public Double getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(Double averageRating) {
+        this.averageRating = averageRating;
     }
 
     public Map<String, Object> getCharacteristics() {

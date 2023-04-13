@@ -24,6 +24,7 @@
         android:id="@+id/checkBox3"
         android:layout_width="85dp"
         android:layout_height="23dp"
+        android:onClick="addBrand"
         android:layout_weight="1"
         android:buttonTint="#B8C6DF" />
 
