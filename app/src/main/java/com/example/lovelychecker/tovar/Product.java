@@ -1,5 +1,7 @@
 package com.example.lovelychecker.tovar;
 
+import com.google.gson.internal.LinkedTreeMap;
+
 import java.util.Map;
 public class Product {
     private String id;
@@ -9,7 +11,7 @@ public class Product {
     private Double toPrice;
 
     private Double averageRating;
-    private Map<String, Object> characteristics;
+    private LinkedTreeMap<String, Object> characteristics;
 
     public String getId() {
         return id;
@@ -59,11 +61,11 @@ public class Product {
         this.averageRating = averageRating;
     }
 
-    public Map<String, Object> getCharacteristics() {
+    public LinkedTreeMap<String, Object> getCharacteristics() {
         return characteristics;
     }
 
-    public void setCharacteristics(Map<String, Object> characteristics) {
+    public void setCharacteristics(LinkedTreeMap<String, Object> characteristics) {
         this.characteristics = characteristics;
     }
 }

@@ -10,7 +10,7 @@
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="372dp"
-        android:layout_height="565dp"
+        android:layout_height="0dp"
         android:layout_marginStart="17dp"
         android:layout_marginEnd="17dp"
         android:layout_marginBottom="13dp"
@@ -22,9 +22,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:divider="@drawable/divider"
             android:orientation="vertical"
-            android:showDividers="middle"
-            android:divider="@drawable/divider">
+            android:showDividers="middle">
 
             <TextView
                 android:id="@+id/textView2"
@@ -48,8 +48,8 @@
                     android:ems="10"
                     android:fontFamily="@font/gothampro_medium"
                     android:gravity="center"
-                    android:inputType="number"
-                    android:text="От" />
+                    android:hint="От"
+                    android:inputType="number" />
 
                 <TextView
                     android:id="@+id/textView5"
@@ -70,8 +70,8 @@
                     android:ems="10"
                     android:fontFamily="@font/gothampro_medium"
                     android:gravity="center"
+                    android:hint="До"
                     android:inputType="number"
-                    android:text="До"
                     android:textColor="@color/text_black" />
             </LinearLayout>
 

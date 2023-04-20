@@ -9,7 +9,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/prodList"
         android:layout_width="0dp"
-        android:layout_height="525dp"
+        android:layout_height="0dp"
         android:layout_marginTop="164dp"
         android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -30,6 +30,7 @@
         android:ems="10"
         android:fontFamily="@font/gothampro"
         android:inputType="textPersonName"
+        android:paddingStart="25dp"
         android:hint="Введите название товара"
         android:textColor="#D0DAE0"
         app:layout_constraintBottom_toTopOf="@+id/prodList"

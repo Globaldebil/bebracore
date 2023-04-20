@@ -1,6 +1,10 @@
 package com.example.lovelychecker;
 
+import com.example.lovelychecker.tovar.Magazins;
 import com.example.lovelychecker.tovar.Product;
+import com.example.lovelychecker.tovar.Review;
+import com.example.lovelychecker.tovar.ReviewRequest;
+import com.example.lovelychecker.tovar.ReviewResponse;
 
 import java.util.List;
 
@@ -34,6 +38,23 @@ public interface interfaceAPI {
     Call<List<Product>> getProducts(@Query(value = "text") String text, @Query("brands") List<String> brands,
                                     @Query("rams") List<String> rams, @Query("sort") String sort);
 
+    @GET("/product/smartphone/{id}")
+    Call<Product> getProduct(@Path("id") String id);
+
+    @POST("/product/smartphone/{id}/review")
+    Call<Void> saveReview(@Path("id") String id, @Body ReviewRequest reviewRequest, @Header("Authorization") String accessToken);
+
+    @POST("/product/smartphone/{id}/review/{reviewId}/like")
+    Call<Void> like(@Path("id") String id, @Path("reviewId") String reviewId, @Header("Authorization") String token);
+
+    @POST("/product/smartphone/{id}/review/{reviewId}/dislike")
+    Call<Void> dislike(@Path("id") String id, @Path("reviewId") String reviewId, @Header("Authorization") String token);
+
+    @GET("/product/smartphone/{id}/reviews")
+    Call<List<ReviewResponse>> getReviews(@Path("id") String id);
+
+    @GET("/product/smartphone/{id}/resources")
+    Call<List<Magazins>> getResources(@Path("id") String id);
     @GET("login/oauth2/{service}")
     Call<Void> oauth2(@Path(value="service") String service);
 //    @GET("/somewhere")

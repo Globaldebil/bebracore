@@ -64,12 +64,12 @@ public class Tovar_Activity extends AppCompatActivity {
         Product product1 = new Product();
         product1.setTitle("Xiaomi note 5");
         product1.setFromPrice(15000.0);
-        item.add(product1);
+//        item.add(product1);
 
         Product product2 = new Product();
         product2.setTitle("Xiaomi note 5");
         product2.setToPrice(15000.0);
-        item.add(product2);
+//        item.add(product2);
 
         interfaceAPI apiService = RetrofitClientInstance.getInstance();
         List<String> brands = null;
@@ -114,7 +114,7 @@ public class Tovar_Activity extends AppCompatActivity {
         prodList = findViewById(R.id.prodList);
         prodList.setLayoutManager(layoutManager);
 
-        productAdapter = new ProductAdapter(this, item);
+        productAdapter = new ProductAdapter(this, this, item);
         prodList.setAdapter(productAdapter);
     }
 
