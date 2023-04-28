@@ -8,11 +8,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClientInstance {
 
 private static Retrofit retrofit = null;
-    public static final String BASE_URL = "http://10.131.60.181:8080";
+    public static final String BASE_URL = "http://192.168.0.11:8080";
     public static String JSESSION_ID;
 
-    public static String USER_ID = "6435cd043572c97e7243c5c9";
-    public static String ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2NDM1Y2QwNDM1NzJjOTdlNzI0M2M1YzkiLCJleHAiOjMzNjM4NjU2NTd9.AY8Yq444j6M63Egd8p2EIxwuPDpBcXbNqyQpjRLAwFY";
+    public static String USER_ID = "\"6448334e949d2a79f2a5776b";
+    public static String ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2NDQ4MzM0ZTk0OWQyYTc5ZjJhNTc3NmIiLCJleHAiOjMzNjQ5MTc5ODd9.TtXzky41Zis7WLxh8VzNIFXGW0ztA-oh88scUZEmJCQ";
     public static interfaceAPI getInstance() {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()

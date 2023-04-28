@@ -3,9 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn = "navigation_view">
 
-
-
     <group>
+
+        <item
+            android:id="@+id/for_home"
+            android:icon="@drawable/nav_home"
+            android:title="Главная" />
 
         <item
             android:id="@+id/chats"
@@ -18,19 +21,14 @@
             android:title="Красота и здоровье" />
 
         <item
-            android:id="@+id/for_home"
-            android:icon="@drawable/nav_home"
-            android:title="Для дома" />
-
-        <item
             android:id="@+id/for_kitchen"
             android:icon="@drawable/nav_kitchen"
             android:title="Для кухни" />
 
         <item
-            android:id="@+id/computers"
-            android:icon="@drawable/nav_pc"
-            android:title="Компьютеры" />
+            android:id="@+id/phones"
+            android:icon="@drawable/baseline_phone_android_24"
+            android:title="Смартфоны" />
 
         <item
             android:id="@+id/acessories"
